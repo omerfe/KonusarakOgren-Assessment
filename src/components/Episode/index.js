@@ -2,7 +2,6 @@ import { StyleSheet } from "react-native";
 import React from "react";
 import {
   TouchableRipple,
-  Button,
   Card,
   Title,
   Paragraph,
@@ -14,10 +13,14 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 const Episode = ({ episode }) => {
   const navigation = useNavigation();
   const { imgSource } = useImage(`${episode?.id}`);
-  const episodeName = `Season ${episode?.episode.slice(
+  const episodeInfo = `Season ${episode?.episode.slice(
     1,
     3
   )} • Episode ${episode?.episode.slice(4)}`;
+  let episodeName = episode?.name;
+  if (episodeName.length > 17) {
+    episodeName = episodeName.slice(0,17) + "..."
+  }
 
   return (
     <TouchableRipple
@@ -25,13 +28,13 @@ const Episode = ({ episode }) => {
     >
       <Card style={styles.card}>
         <Card.Content style={[styles.content, {paddingBottom: 5}]}>
-          <Title>{episode?.name}</Title>
-          <Paragraph>{episode?.air_date}</Paragraph>
+          <Title style={{fontSize: 18}}>{episodeName}</Title>
+          <Paragraph style={{fontSize: 12}}>{episode?.air_date}</Paragraph>
         </Card.Content>
         <Card.Cover source={imgSource} />
         <Card.Content style={[styles.content, {paddingTop: 5}]}>
           <MaterialCommunityIcons name="movie-open-outline" size={24} color='#EA7B26' />
-          <Title style={styles.episodeName}>{episodeName}</Title>
+          <Title style={styles.episodeName}>{episodeInfo}</Title>
         </Card.Content>
       </Card>
     </TouchableRipple>

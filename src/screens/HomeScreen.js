@@ -4,7 +4,7 @@ import { ActivityIndicator } from "react-native-paper";
 import baseManager from '../api/baseManager'
 import Episode from "../components/Episode";
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = () => {
   const [episodes, setEpisodes] = useState([]);
   const [loading, setLoading] = useState(true);
 

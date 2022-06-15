@@ -8,8 +8,7 @@ const HomePageStack = createNativeStackNavigator();
 const HomeStack = () => {
   return (
     <HomePageStack.Navigator screenOptions={{headerStyle: {
-        backgroundColor: '#EA7B26',
-    }}}>
+        backgroundColor: '#EA7B26'}, headerTintColor: '#000'}}>
       <HomePageStack.Screen
         name="Home"
         component={HomeScreen}
@@ -17,7 +16,7 @@ const HomeStack = () => {
           headerTitle: "Episodes",
         }}
       />
-      <HomePageStack.Screen name="Episode" component={EpisodeScreen} options={{headerTintColor: '#000'}} />
+      <HomePageStack.Screen name="Episode" component={EpisodeScreen} />
       <HomePageStack.Screen name="Character" component={CharacterScreen} />
     </HomePageStack.Navigator>
   );
