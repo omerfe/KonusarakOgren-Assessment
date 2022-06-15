@@ -40,8 +40,8 @@ const AnimatedSplashScreen = ({ children, image }) => {
             {
               backgroundColor: Constants.manifest.splash.backgroundColor,
               opacity: animation,
-              justifyContent: 'center',
-              alignItems: 'center'
+              justifyContent: "center", 
+              alignItems: "center"
             },
           ]}
         >

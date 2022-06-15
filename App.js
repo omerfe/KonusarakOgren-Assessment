@@ -1,37 +1,29 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import AnimatedSplashScreen from "./src/components/AnimatedSplashScreen";
 import Logo from "./assets/logo.png";
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
+import RootNavigator from "./src/navigation";
+import { View } from "react-native";
 
 export default function App() {
   const theme = {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      primary: "#BF9B30",
-      accent: "yellow",
+      primary: "#309DFF",
+      accent: "#EA7B26",
     },
   };
 
   return (
     <PaperProvider theme={theme}>
-      <View style={styles.container}>
-        <AnimatedSplashScreen image={Logo}>
-          <Text>Wow</Text>
-        </AnimatedSplashScreen>
-        <StatusBar style="auto" />
-      </View>
+      <NavigationContainer>
+          <AnimatedSplashScreen image={Logo}></AnimatedSplashScreen>
+          <RootNavigator/>
+      </NavigationContainer>
+      <StatusBar style="auto" />
     </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
