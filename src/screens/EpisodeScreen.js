@@ -6,6 +6,7 @@ import baseManager from "../api/baseManager";
 
 const EpisodeScreen = ({ route }) => {
   const id = route.params.itemId;
+  const imgSource = route.params.img;
   const [episode, setEpisode] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -30,7 +31,7 @@ const EpisodeScreen = ({ route }) => {
       {loading ? (
         <ActivityIndicator animating={true} color="#309DFF" />
       ) : (
-        <EpisodeDetails characterURLs={episode?.characters} name={episode?.name} episode={episode?.episode} airDate={episode?.air_date}/>
+        <EpisodeDetails img={imgSource} characterURLs={episode?.characters} name={episode?.name} episode={episode?.episode} airDate={episode?.air_date}/>
       )}
     </View>
   );

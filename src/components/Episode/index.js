@@ -24,7 +24,7 @@ const Episode = ({ episode }) => {
 
   return (
     <TouchableRipple
-      onPress={() => navigation.navigate("Episode", { itemId: episode?.id })}
+      onPress={() => navigation.navigate("Episode", { itemId: episode?.id, img: imgSource })}
     >
       <Card style={styles.card}>
         <Card.Content style={[styles.content, {paddingBottom: 5}]}>

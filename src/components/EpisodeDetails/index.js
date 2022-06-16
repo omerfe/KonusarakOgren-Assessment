@@ -2,20 +2,27 @@ import { FlatList, StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
-  TouchableRipple,
   Card,
   Title,
   Paragraph,
   Divider,
+  Modal,
+  Portal,
+  Button,
+  Provider,
 } from "react-native-paper";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import baseManager from "../../api/baseManager";
 import Character from "../Character";
 
 const EpisodeDetails = (props) => {
-  const { characterURLs, name, episode, airDate } = props;
+  const { characterURLs, name, episode, airDate, img } = props;
   const [characterList, setCharacterList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [visible, setVisible] = useState(false);
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+  const containerStyle = { backgroundColor: "white", padding: 20, marginBottom: 20, };
 
   let ids = [];
   for (let i = 0; i < characterURLs.length; i++) {
@@ -46,9 +53,7 @@ const EpisodeDetails = (props) => {
   )} • Episode ${episode?.slice(4)}`;
 
   const renderItem = ({ item }) => {
-    return (
-      <Character item={item}/>
-    );
+    return <Character item={item} />;
   };
 
   return (
@@ -63,6 +68,7 @@ const EpisodeDetails = (props) => {
               <Paragraph>{episodeInfo}</Paragraph>
             </Card.Content>
             <Divider />
+            <Card.Cover source={img} />
             <Card.Content style={styles.content}>
               <MaterialCommunityIcons
                 name="timeline-check-outline"
@@ -71,22 +77,32 @@ const EpisodeDetails = (props) => {
               />
               <Title style={styles.episodeName}>{airDate}</Title>
             </Card.Content>
-          </Card>
-          <Card>
             <Card.Content>
               <Title>Characters</Title>
               <Divider />
             </Card.Content>
-
-            {characterList && (
-              <FlatList
-                data={characterList}
-                keyExtractor={(item) => item.id}
-                renderItem={renderItem}
-                showsVerticalScrollIndicator={false}
-              />
-            )}
+            <Card.Actions>
+              <Button style={styles.btn} dark mode="contained" onPress={showModal}>Show Characters</Button>
+            </Card.Actions>
           </Card>
+          <Provider>
+            <Portal>
+              <Modal
+                visible={visible}
+                onDismiss={hideModal}
+                contentContainerStyle={containerStyle}
+              >
+                {characterList && (
+                  <FlatList
+                    data={characterList}
+                    keyExtractor={(item) => item.id}
+                    renderItem={renderItem}
+                    showsVerticalScrollIndicator={false}
+                  />
+                )}
+              </Modal>
+            </Portal>
+          </Provider>
         </View>
       )}
     </View>
@@ -97,7 +113,7 @@ export default EpisodeDetails;
 
 const styles = StyleSheet.create({
   card: {
-    marginBottom: 10,
+    marginBottom: 100,
   },
   content: {
     flexDirection: "row",
@@ -108,4 +124,7 @@ const styles = StyleSheet.create({
   episodeName: {
     fontSize: 16,
   },
+  btn: {
+    width: '100%',
+  }
 });

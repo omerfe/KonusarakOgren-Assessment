@@ -1,11 +1,17 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { TouchableRipple, Card, Title } from "react-native-paper";
+import { TouchableRipple, Card, Title, Avatar  } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
 const Character = ({ item }) => {
   const navigation = useNavigation();
+  let characterName = item?.name;
+  if (characterName.length > 14) {
+    characterName = characterName.slice(0,12) + "..."
+  }
+  let characterStatus = item?.status === 'unknown' ? 'Unk' : item?.status;
+  
 
   return (
     <TouchableRipple
@@ -14,13 +20,8 @@ const Character = ({ item }) => {
     >
       <Card.Content style={styles.characterContainer}>
         <View style={styles.content}>
-          <MaterialCommunityIcons
-            name="alien-outline"
-            size={24}
-            color="#309DFF"
-            style={styles.icon}
-          />
-          <Title style={{fontSize: 18}}>{item.name}</Title>
+          <Avatar.Image size={30} source={{uri: item?.image}} style={styles.icon}/>
+          <Title style={{fontSize: 18}}>{characterName}</Title>
         </View>
         <View style={styles.content}>
           <MaterialCommunityIcons
@@ -29,7 +30,7 @@ const Character = ({ item }) => {
             color="#309DFF"
             style={styles.icon}
           />
-          <Title style={{fontSize: 18}}>{item.status}</Title>
+          <Title style={{fontSize: 18}}>{characterStatus}</Title>
         </View>
       </Card.Content>
     </TouchableRipple>
